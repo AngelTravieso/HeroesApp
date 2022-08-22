@@ -5,12 +5,13 @@ import { AuthContext } from '../../auth/context/AuthContext';
 
 export const Navbar = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     // Toma del Navigation.Provider info de las rutas
     const navigate = useNavigate();
 
     const onLogout = () => {
+        logout();
         navigate('/login', {
             replace: true // evita que pueda ingresar al historial anterior
         });
