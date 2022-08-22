@@ -3,6 +3,7 @@ import queryString from 'query-string';
 
 import { HeroCard } from "../components";
 import { useForm } from "../../hooks/useForm";
+import { getHeroesByName } from "../helpers";
 
 
 export const SearchPage = () => {
@@ -13,8 +14,11 @@ export const SearchPage = () => {
   // para obtener todos los query params y evitar el procesamiento nosotros
   const { q = '' } = queryString.parse( location.search );
 
+  // Obtener heroe por el nombre (busqueda input)
+  const heroes = getHeroesByName(q);
+
   const { searchText, onInputChange, onResetForm } = useForm({
-    searchText: '',
+    searchText: q,
   });
 
 
@@ -68,7 +72,11 @@ export const SearchPage = () => {
             No hero with <b>{ q }</b>
           </div>
 
-          {/* <HeroCard { ...hero } /> */}
+          {
+            heroes.map( hero => (
+              <HeroCard key={ hero.id } {...hero} />
+            ))
+          }
 
         </div>
       </div>
